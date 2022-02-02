@@ -3,7 +3,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "baseUrl": "./src",
     "checkJs": true,
     "declaration": true,
     "declarationMap": true,
@@ -29,7 +28,5 @@
     "suppressImplicitAnyIndexErrors": true,
     "target": "esnext",
     "preserveSymlinks": true
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules"]
+  }
 }

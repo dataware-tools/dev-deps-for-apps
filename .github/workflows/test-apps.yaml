@@ -18,7 +18,7 @@ jobs:
           - app-data-browser-next
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: dev-deps-for-apps
           submodules: recursive
@@ -28,7 +28,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: dataware-tools/${{ matrix.app }}
           path: app

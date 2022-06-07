@@ -1,0 +1,16 @@
+name: dummy check for merging automatically PR updating minor or patch update 
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "package.json"
+      - "package-lock.json"
+
+jobs:
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dummy
+        run: echo "dummy"

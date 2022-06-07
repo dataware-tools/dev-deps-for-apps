@@ -4,7 +4,5 @@
     "github>dataware-tools/renovate-config",
     ":automergeMinor"
   ],
-  "reviewers": ["WatanabeToshimitsu"],
-  "ignoreDeps": ["loki", "msw"]
-
+  "reviewers": ["WatanabeToshimitsu"]
 }

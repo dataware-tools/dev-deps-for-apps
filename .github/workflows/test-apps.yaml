@@ -12,12 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
         app:
           - app-data-browser-next
-          - app-user-manager
-          - app-launcher-next
-          - app-template-vite
 
     steps:
       - uses: actions/checkout@v2

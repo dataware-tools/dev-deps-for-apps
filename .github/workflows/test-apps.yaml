@@ -1,0 +1,65 @@
+name: Test configs
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "configs"
+
+jobs:
+  test-apps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+
+    strategy:
+      matrix:
+        app:
+          - app-data-browser-next
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: dev-deps-for-apps
+          submodules: recursive
+
+      - name: Setup ssh-agent
+        uses: webfactory/ssh-agent@v0.5.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v2
+        with:
+          repository: dataware-tools/${{ matrix.app }}
+          path: app
+          submodules: recursive
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Build app
+        env:
+          NPM_REGISTRY: https://npm.pkg.github.com
+          NPM_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        shell: bash
+        working-directory: app
+        run: |
+          export DOCKER_BUILDKIT=1
+          echo "//${NPM_REGISTRY##*://}/:_authToken=${NPM_TOKEN}" > /tmp/.npmrc
+          docker build -t app:latest --ssh default --secret id=npmrc,src=/tmp/.npmrc --target test .
+
+      - name: Run test container
+        run: (docker run --privileged -v ${PWD}/dev-deps-for-apps:/dev-deps-for-apps:rw --name app-test app:latest) &
+
+      - name: Test app
+        shell: bash
+        run: |
+          docker exec app-test bash -c \
+              "rm -r node_modules/@dataware-tools/dev-deps-for-apps/* \
+                 && cp -r /dev-deps-for-apps/* node_modules/@dataware-tools/dev-deps-for-apps \
+                 && npm run test 
+              "

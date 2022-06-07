@@ -3,5 +3,6 @@
   "extends": [
     "github>dataware-tools/renovate-config",
     ":automergeMinor"
-  ]
+  ],
+  "reviewers": ["WatanabeToshimitsu"]
 }

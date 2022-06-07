@@ -1,9 +1,11 @@
-name: Test depending applications
+name: Test configs
 
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - "configs"
 
 jobs:
   test-apps:

@@ -8,4 +8,6 @@ module.exports = {
       mobile: false,
     },
   },
+  diffingEngine: "looks-same",
+  "looks-same": { tolerance: 2.3 },
 };

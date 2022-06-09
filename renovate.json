@@ -4,5 +4,11 @@
     "github>dataware-tools/renovate-config",
     ":automergeMinor"
   ],
+  "packageRules": [ {
+      "matchDepTypes": [
+        "peerDependencies"
+      ],
+      "rangeStrategy": "bump"
+    }],
   "reviewers": ["WatanabeToshimitsu"]
 }

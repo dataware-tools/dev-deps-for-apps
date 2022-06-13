@@ -13,7 +13,7 @@
   },
   "description": "Dev dependencies for dataware-tools front application",
   "peerDependencies": {
-    "@babel/core": "^7.18.2",
+    "@babel/core": "^7.18.5",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@storybook/addon-actions": "^6.5.8",
     "@storybook/addon-essentials": "^6.5.8",

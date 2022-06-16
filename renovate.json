@@ -9,6 +9,5 @@
         "peerDependencies"
       ],
       "rangeStrategy": "bump"
-    }],
-  "reviewers": ["WatanabeToshimitsu"]
+    }]
 }

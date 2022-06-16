@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: ${{ inputs.package_name }}
+          path: dev-deps-for-apps
           submodules: recursive
 
       - uses: actions/checkout@v3
@@ -53,7 +53,7 @@ jobs:
           docker build -t app:latest --ssh default --secret id=npmrc,src=/tmp/.npmrc --target test .
 
       - name: Run test container
-        run: (docker run --privileged -v ${PWD}/${{ inputs.package_name }}:/${{ inputs.package_name }}:rw --name app-test app:latest) &
+        run: (docker run --privileged -v ${PWD}/dev-deps-for-apps/${{ inputs.package_name }}:/${{ inputs.package_name }}:rw --name app-test app:latest) &
 
       - name: Test app
         shell: bash

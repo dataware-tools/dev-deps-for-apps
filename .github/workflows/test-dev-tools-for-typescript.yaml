@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - "dev-tools-for-typescript/configs/*"
+      - "dev-tools-for-typescript/configs/**"
 
 jobs:
   test-config:
     uses: ./.github/workflows/test-config.yaml
-    with: 
+    with:
       package_name: dev-tools-for-typescript
       secrets: inherit

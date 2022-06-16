@@ -1,0 +1,15 @@
+name: Test configs
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "dev-tools-for-react/configs"
+
+jobs:
+  test-config:
+    uses: ./.github/workflows/test-config.yaml
+    with: 
+      package_name: dev-tools-for-react
+      secrets: inherit

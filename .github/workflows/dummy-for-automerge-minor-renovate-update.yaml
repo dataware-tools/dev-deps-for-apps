@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "package.json"
-      - "package-lock.json"
+      - "*/package.json"
+      - "*/package-lock.json"
 
 jobs:
   dummy:

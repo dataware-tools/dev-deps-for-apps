@@ -1,11 +1,14 @@
 name: Test configs
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "configs"
+  workflow_call:
+    inputs:
+      package_name:
+        required: true
+        type: string
+    secrets:
+      REPO_ACCESS_TOKEN:
+        required: true
 
 jobs:
   test-apps:
@@ -20,13 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          path: dev-deps-for-apps
+          path: ${{ inputs.package_name }}
           submodules: recursive
-
-      - name: Setup ssh-agent
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - uses: actions/checkout@v3
         with:
@@ -39,7 +37,6 @@ jobs:
         with:
           node-version: 16
           cache: npm
-          cache-dependency-path: app/package-lock.json
 
       - name: Build app
         env:
@@ -53,13 +50,13 @@ jobs:
           docker build -t app:latest --ssh default --secret id=npmrc,src=/tmp/.npmrc --target test .
 
       - name: Run test container
-        run: (docker run --privileged -v ${PWD}/dev-deps-for-apps:/dev-deps-for-apps:rw --name app-test app:latest) &
+        run: (docker run --privileged -v ${PWD}/${{ inputs.package_name }}:/${{ inputs.package_name }}:rw --name app-test app:latest) &
 
       - name: Test app
         shell: bash
         run: |
           docker exec app-test bash -c \
-              "rm -r node_modules/@dataware-tools/dev-deps-for-apps/* \
-                 && cp -r /dev-deps-for-apps/* node_modules/@dataware-tools/dev-deps-for-apps \
+              "rm -r node_modules/@dataware-tools/${{ inputs.package_name }}/* \
+                 && cp -r /${{ inputs.package_name }}/* node_modules/@dataware-tools/${{ inputs.package_name }} \
                  && npm run test 
               "

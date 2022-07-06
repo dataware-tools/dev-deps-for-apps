@@ -2,10 +2,10 @@
   "name": "@dataware-tools/dev-tools-for-react",
   "author": "dataware-tools",
   "license": "Apache-2.0",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dataware-tools/dev-deps-for-apps.git"
+    "url": "https://github.com/dataware-tools/dev-tools-for-apps.git"
   },
   "engines": {
     "node": "14 - 16",

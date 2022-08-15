@@ -13,7 +13,7 @@
   },
   "description": "Dev dependencies for dataware-tools front application",
   "peerDependencies": {
-    "@types/jest": "^28.1.6",
+    "@types/jest": "^28.1.7",
     "cross-env": "^7.0.3",
     "husky": "^8.0.1",
     "jest": "^28.1.3",

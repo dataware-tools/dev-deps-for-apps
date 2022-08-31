@@ -1,6 +1,4 @@
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
-const path = require("path");
-const toPath = (filePath) => path.join(process.cwd(), filePath);
 
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -15,16 +13,18 @@ module.exports = {
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
+  core: {
+    builder: "webpack5",
+  },
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
-
-    config.resolve.plugins.push(
-      new TsconfigPathsPlugin({
-        configFile: path.resolve(__dirname, "../../../../../tsconfig.json"),
-      })
-    );
+    if (!config.resolve.plugins) {
+      config.resolve.plugins = [];
+    }
+    const tsconfigPlugin = new TsconfigPathsPlugin({ logLevel: "INFO" });
+    config.resolve.plugins.push(tsconfigPlugin);
 
     // Return the altered config
     return {
@@ -32,11 +32,6 @@ module.exports = {
       resolve: {
         ...config.resolve,
         symlinks: false,
-        alias: {
-          ...config.resolve.alias,
-          "@emotion/core": toPath("node_modules/@emotion/react"),
-          "emotion-theming": toPath("node_modules/@emotion/react"),
-        },
       },
     };
   },
